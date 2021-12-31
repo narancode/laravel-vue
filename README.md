@@ -1,2 +1,2 @@
 # laravel-vue
- CRUD with laravel and vuejs 3
+ How to install bootstrap 3 in laravel 8 with vuejs 3
