@@ -11,10 +11,10 @@ const app = createApp({});
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 
-import Home from './components/Home.vue';
+import Main from './components/employee/Main.vue';
 
 
-app.component('home', Home);
+app.component('employee-main', Main);
 
 
 app.mount('#app');
