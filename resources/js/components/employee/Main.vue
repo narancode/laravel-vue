@@ -35,7 +35,7 @@
                 </table>
             </div>
             <div class="col-4">
-                <form>
+                <form @submit.prevent="saveData()">
                     <div class="form-row form-section">
                         <h4 class="mb-3">Add Employee Info</h4>
                         <div class="col-12 mb-3">
@@ -48,6 +48,7 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="employee.first_name"
                                 placeholder="First Name"
                             />
                         </div>
@@ -61,6 +62,7 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="employee.last_name"
                                 placeholder="Last Name"
                             />
                         </div>
@@ -72,6 +74,7 @@
                             <input
                                 type="email"
                                 class="form-control"
+                                v-model="employee.email"
                                 placeholder="Email"
                             />
                         </div>
@@ -83,6 +86,7 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="employee.phone"
                                 placeholder="Phone No."
                             />
                         </div>
@@ -95,6 +99,7 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="employee.current_experience"
                                 placeholder="Current Experience"
                             />
                         </div>
@@ -105,6 +110,7 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="employee.city"
                                 placeholder="City"
                             />
                         </div>
@@ -116,6 +122,7 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                v-model="employee.state"
                                 placeholder="State"
                             />
                         </div>
@@ -130,9 +137,9 @@
                                 <input
                                     class="form-check-input"
                                     type="radio"
-                                    name="gridRadios"
-                                    id="gridRadios1"
-                                    value="option1"
+                                    name="gender"
+                                    value="male"
+                                    v-model="employee.gender"
                                     checked
                                 />
                                 <label
@@ -146,9 +153,9 @@
                                 <input
                                     class="form-check-input"
                                     type="radio"
-                                    name="gridRadios"
-                                    id="gridRadios2"
-                                    value="option2"
+                                    name="gender"
+                                    value="female"
+                                    v-model="employee.gender"
                                 />
                                 <label
                                     class="form-check-label"
@@ -171,8 +178,31 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            'employee': {
+                'first_name':'',
+                'last_name':'',
+                'email':'',
+                'phone':'',
+                'city':'',
+                'current_experience':'',
+                'state':'',
+                'gender':''
+            }
+        };
     },
+
+    methods: {
+        saveData() {
+            axios.post('/employee/create', this.employee).then(
+                response => {
+                    console.log(response);
+                }
+            ). catch(error => {
+                console.log('Error here');
+            })
+        }
+    }
 };
 </script>
 
