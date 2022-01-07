@@ -197,17 +197,9 @@ export default {
             axios.post('/employee/create', this.employee).then(
                 response => {
                     console.log(response);
-                    this.$toast.success(`Success!!! Your data hase be saved succssfully.`, {
-                        // override the global option
-                        position: "top-right",
-                        });
                 }
             ). catch(error => {
                 console.log('Error here');
-                this.$toast.error(`Something went wrong!`, {
-                        // override the global option
-                        position: "top-right",
-                        });
             })
         }
     }
