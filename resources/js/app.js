@@ -5,6 +5,7 @@ import { createApp } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrashAlt, faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Toaster from "@meforma/vue-toaster";
 
 library.add(faTrashAlt, faUserEdit)
 const app = createApp({});
@@ -18,3 +19,4 @@ app.component('employee-main', Main);
 
 
 app.mount('#app');
+app.use(Toaster);
