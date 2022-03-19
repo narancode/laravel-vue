@@ -35,7 +35,7 @@
                 </table>
             </div>
             <div class="col-4">
-                <form @submit.prevent="saveData()">
+                <Form @submit.prevent="saveData()">
                     <div class="form-row form-section">
                         <h4 class="mb-3">Add Employee Info</h4>
                         <div class="col-12 mb-3">
@@ -45,12 +45,15 @@
                                 >First Name
                                 <span class="form-required">*</span>
                             </label>
-                            <input
+                            <Field
+                                name="first_name"
                                 type="text"
                                 class="form-control"
                                 v-model="employee.first_name"
                                 placeholder="First Name"
+                                :rules="isRequired"
                             />
+                            <ErrorMessage class="form-required" name="first_name" />
                         </div>
                         <div class="col-12 mb-3">
                             <label
@@ -59,31 +62,38 @@
                                 >Last Name
                                 <span class="form-required">*</span>
                             </label>
-                            <input
+                            <Field
+                                name="last_name"
                                 type="text"
                                 class="form-control"
                                 v-model="employee.last_name"
                                 placeholder="Last Name"
+                                :rules="isRequired"
                             />
+                            <ErrorMessage class="form-required" name="last_name" />
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label form-label-top" for="email"
                                 >Email
                                 <span class="form-required">*</span></label
                             >
-                            <input
+                            <Field
+                                name="email"
                                 type="email"
                                 class="form-control"
                                 v-model="employee.email"
                                 placeholder="Email"
+                                :rules="validateEmail"
                             />
+                            <ErrorMessage class="form-required" name="email" />
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label form-label-top" for="email"
                                 >Phone No.
                                 <span class="form-required">*</span></label
                             >
-                            <input
+                            <Field
+                                name="phone"
                                 type="text"
                                 class="form-control"
                                 v-model="employee.phone"
@@ -96,7 +106,7 @@
                                 for="currentExperience"
                                 >Current Experience</label
                             >
-                            <input
+                            <Field name="current_experience"
                                 type="text"
                                 class="form-control"
                                 v-model="employee.current_experience"
@@ -107,7 +117,7 @@
                             <label class="form-label form-label-top" for="city"
                                 >City</label
                             >
-                            <input
+                            <Field name="city"
                                 type="text"
                                 class="form-control"
                                 v-model="employee.city"
@@ -119,7 +129,7 @@
                             <label class="form-label form-label-top" for="state"
                                 >State</label
                             >
-                            <input
+                            <Field name="state"
                                 type="text"
                                 class="form-control"
                                 v-model="employee.state"
@@ -169,14 +179,20 @@
                             SUBMIT
                         </button>
                     </div>
-                </form>
+                </Form>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Form, Field, ErrorMessage } from 'vee-validate';
 export default {
+    components: {
+        Form,
+        Field,
+        ErrorMessage
+    },
     data() {
         return {
             'employee': {
@@ -193,6 +209,25 @@ export default {
     },
 
     methods: {
+        isRequired(value) {
+            if (value && value.trim()) {
+                return true;
+            }
+            return 'This is required';
+        },
+         validateEmail(value) {
+            // if the field is empty
+            if (!value) {
+                return 'This field is required';
+            }
+            // if the field is not a valid email
+            const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+            if (!regex.test(value)) {
+                return 'This field must be a valid email';
+            }
+            // All is good
+            return true;
+        },
         saveData() {
             axios.post('/employee/create', this.employee).then(
                 response => {
